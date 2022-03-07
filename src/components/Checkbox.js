@@ -1,18 +1,27 @@
-import  React, {useState} from 'react';
+import  React, { useState, useEffect } from 'react';
 
 
-const useLocalStorage = (initialValue) => {
+const useLocalStorage = (key, initialValue) => {
     const [value, setValue] = useState(initialValue);
 
-    return useState(value, setValue);
+    useEffect(() => {
+        const storedValue = JSON.parse(window.localStorage.getItem(key));
+        setValue(storedValue);
+    }, [key]);
+
+
+    const storedValue = (newValue) => {
+        window.localStorage.setItem(key,JSON.stringify(newValue));
+        setValue(newValue);
+    }
+    return [value, storedValue];
 };
 
-
-const Checkbox = () => {
-   const [checked, setChecked] = useLocalStorage(false);
+const Checkbox = ({id}) => {
+   const [checked, setChecked] = useLocalStorage(id, false);
    return <div>
        <input type="checkbox" checked={checked} onChange={() => {
-       setChecked(previousState => !previousState)
+       setChecked(!checked)
        }
        } />
    </div>;

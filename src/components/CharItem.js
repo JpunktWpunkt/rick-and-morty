@@ -19,7 +19,7 @@ const CharItem = ({ item }) => {
                        <strong>Status: </strong> {item.status}
                    </li>
                    <li><button className="btn">Add to Favorite</button></li>
-                   <Checkbox />
+                   <Checkbox id={item.id} />
                </ul>
            </div>
             </div>
